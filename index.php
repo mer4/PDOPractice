@@ -17,20 +17,26 @@ try {
 }
 
 try {
-	$stmt = $dbh->prepare("SELECT * FROM accounts");
+	$stmt = $dbh->prepare("SELECT * FROM accounts WHERE id < 6");
 	$stmt->execute();
 	$result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
 	$result = $stmt->fetchAll();
 	//print_r($result);
+	
+	$records = count($result);
+	echo 'Records: ' . $records . '<br>';
 
 	echo '<table>';
 	foreach ($result as $result) {
-		echo "<tr><td>" . $result['id'] . "</td><td>" . $result['email'] . "</td></tr>";
+		echo "<tr><td>id: " . $result['id'] . "</td><td>email: " . $result['email'] .
+		"</td><td>fname: " . $result['fname'] . "</td><td>lname: " . $result['lname'] .
+		"</td><td>phone: " . $result['phone'] . "</td><td>birthday: " . $result['birthday'] .
+		"</td><td>gender: " . $result['gender'] . "</td><td>password: " . $result['password'] . "</td></tr>";
 	}
 	echo '</table>';
 
 } catch (PDOException $e) {
-	echo $sql . "<br>" . $e->getMessage();
+	echo 'Error: <br>' . $e->getMessage();
 }
 
 ?>
